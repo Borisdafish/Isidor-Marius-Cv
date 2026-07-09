@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BetterTanks — Project Presentation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #0f172a; color: #e2e8f0; overflow: hidden; }
+  .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; flex-direction: column; justify-content: center; padding: 60px 80px; }
+  .slide.active { display: flex; }
+  .slide h1 { font-size: 3rem; color: #f8fafc; margin-bottom: 16px; }
+  .slide h2 { font-size: 2rem; color: #f1f5f9; border-left: 5px solid #f97316; padding-left: 16px; margin-bottom: 24px; }
+  .slide p, .slide li { font-size: 1.15rem; line-height: 1.7; color: #cbd5e1; }
+  .slide ul { padding-left: 24px; margin-top: 8px; }
+  .slide li { margin-bottom: 8px; }
+  .tag { display: inline-block; background: #1e293b; border: 1px solid #334155; color: #93c5fd; padding: 4px 12px; border-radius: 14px; font-size: 0.85rem; margin: 4px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .center { text-align: center; }
+  .hero { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+  .nav { position: fixed; bottom: 24px; right: 32px; display: flex; gap: 10px; z-index: 10; }
+  .nav button { background: #334155; border: none; color: #e2e8f0; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+  .nav button:hover { background: #f97316; }
+  .counter { position: fixed; bottom: 28px; left: 32px; color: #64748b; font-size: 0.9rem; z-index: 10; }
+  .slide-num { position: fixed; top: 20px; right: 32px; color: #475569; font-size: 0.85rem; z-index: 10; }
+  .tree { font-family: 'Courier New', monospace; font-size: 0.9rem; color: #93c5fd; line-height: 1.6; white-space: pre; }
+  .highlight { color: #f97316; font-weight: 700; }
+  @media (max-width: 700px) { .slide { padding: 30px 24px; } .slide h1 { font-size: 2rem; } .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 0: Title -->
+<div class="slide hero active">
+  <div class="center">
+    <p style="color:#94a3b8; letter-spacing:3px; text-transform:uppercase; margin-bottom:12px;">Project Presentation</p>
+    <h1 style="font-size:4rem;">BetterTanks</h1>
+    <p style="font-size:1.3rem; color:#94a3b8;">2D Tile-Based Tank Battle Game — Unity WebGL</p>
+    <p style="margin-top:8px; color:#64748b;">Presented by Isidor Marius</p>
+  </div>
+</div>
+
+<!-- SLIDE 1: Overview -->
+<div class="slide">
+  <h2>Project Overview</h2>
+  <div class="two-col">
+    <div>
+      <p><span class="highlight">BetterTanks</span> is a 2D top-down tank battle game built in Unity. Players navigate a destructible tile-grid map, engage enemies, and complete objectives across two distinct game modes.</p>
+      <ul style="margin-top:16px;">
+        <li><strong>Genre:</strong> 2D Top-Down Shooter</li>
+        <li><strong>Engine:</strong> Unity 6000.5.1f1 (C#)</li>
+        <li><strong>Platform:</strong> WebGL (GitHub Pages)</li>
+        <li><strong>Team size:</strong> Multi-developer (Git Flow)</li>
+      </ul>
+    </div>
+    <div>
+      <p style="color:#94a3b8;">Key Features</p>
+      <div>
+        <span class="tag">Tile-Grid Map</span><span class="tag">Destructible Walls</span><span class="tag">2 Game Modes</span>
+        <span class="tag">Object Pooling</span><span class="tag">VFX System</span><span class="tag">WebGL Deploy</span>
+        <span class="tag">Input System</span><span class="tag">Audio Manager</span><span class="tag">Health Bars</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2: Game Modes -->
+<div class="slide">
+  <h2>Game Modes</h2>
+  <div class="two-col">
+    <div>
+      <h3 style="color:#f97316; margin-bottom:8px;">Classic Mode</h3>
+      <p>Classic 1v1 tank combat on a symmetrical tile-grid arena.</p>
+      <ul>
+        <li>Player vs. BasicEnemy waves</li>
+        <li>4-directional movement & shooting</li>
+        <li>Wall destruction for tactical cover</li>
+        <li>Score tracking & game-over screen</li>
+      </ul>
+      <p style="margin-top:12px; color:#64748b;">Script: <code>ClassicMode.cs</code></p>
+    </div>
+    <div>
+      <h3 style="color:#f97316; margin-bottom:8px;">Base Defense Mode</h3>
+      <p>Defend your headquarters against escalating enemy waves.</p>
+      <ul>
+        <li>BaseHQ takes damage on contact</li>
+        <li>Progressive wave difficulty</li>
+        <li>3 lives represented by tank icons</li>
+        <li>Lose condition when base is destroyed</li>
+      </ul>
+      <p style="margin-top:12px; color:#64748b;">Script: <code>BaseDefenseMode.cs</code></p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Architecture -->
+<div class="slide">
+  <h2>Architecture Overview</h2>
+  <p style="margin-bottom:16px;">Component-based, data-driven architecture with centralized managers.</p>
+  <div class="tree">
+<span class="highlight">Core/</span>          — GameManager, GridManager, AudioManager, ObjectPool
+<span class="highlight">Player/</span>        — PlayerController, PlayerShooting, PlayerInput
+<span class="highlight">Enemies/</span>      — BasicEnemy, EnemySpawner, EnemyAI
+<span class="highlight">Combat/</span>       — Bullet, BulletPoolManager, ImpactAnimation
+<span class="highlight">Terrain/</span>      — TileManager, DestructibleWall
+<span class="highlight">UI/</span>           — MainMenu, HUD, PauseMenu, GameOverScreen
+<span class="highlight">Effects/</span>      — MuzzleFlashEffect, TankExplosion
+<span class="highlight">Data/</span>         — GameConfig (ScriptableObject)
+  </div>
+</div>
+
+<!-- SLIDE 4: Class Diagram -->
+<div class="slide">
+  <h2>Key Classes</h2>
+  <div class="two-col">
+    <div>
+      <p class="highlight" style="margin-bottom:6px;">Core Systems</p>
+      <ul>
+        <li><code>GameManager</code> — global state, mode switching</li>
+        <li><code>GridManager</code> — tile ↔ world coordinate mapping</li>
+        <li><code>TileManager</code> — wall queries, damage application</li>
+        <li><code>ObjectPool</code> — generic reusable object pool</li>
+        <li><code>BulletPoolManager</code> — bullet lifecycle</li>
+        <li><code>AudioManager</code> — SFX & music playback</li>
+      </ul>
+    </div>
+    <div>
+      <p class="highlight" style="margin-bottom:6px;">Actors</p>
+      <ul>
+        <li><code>TankController</code> — movement abstraction</li>
+        <li><code>PlayerController</code> — input-driven tank movement</li>
+        <li><code>PlayerShooting</code> — cooldown, bullet spawn, muzzle VFX</li>
+        <li><code>BasicEnemy</code> — AI brain, TakeDamage()</li>
+        <li><code>EnemySpawner</code> — wave management</li>
+        <li><code>BaseHQ</code> — destructible objective</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Combat System -->
+<div class="slide">
+  <h2>Combat System</h2>
+  <div class="two-col">
+    <div>
+      <p><span class="highlight">Bullet.cs</span> handles the full projectile lifecycle:</p>
+      <ul>
+        <li>Direction-based rotation on spawn</li>
+        <li>Speed & lifetime management</li>
+        <li>Wall collision → DamageWall() + impact VFX</li>
+        <li>Tank collision → TakeDamage() + return to pool</li>
+        <li>Out-of-bounds → silent return</li>
+      </ul>
+      <p style="margin-top:8px; color:#64748b;">Object pooled via <code>BulletPoolManager</code></p>
+    </div>
+    <div>
+      <p><span class="highlight">Two bullet types:</span></p>
+      <ul>
+        <li><code>BulletType.Scout</code> — fast, small sprite</li>
+        <li><code>BulletType.Infantry</code> — slower, larger sprite</li>
+      </ul>
+      <p style="margin-top:16px;" class="highlight">Impact Animation System</p>
+      <p>Frame-by-frame sprite animations stored in <code>Resources/Sprites/Effects/Impacts/</code> — Scout (5 frames) and Infantry (4 frames). Falls back to a procedural explosion sprite if no frames are found.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Tile System -->
+<div class="slide">
+  <h2>Tile & Destructible Environment</h2>
+  <ul>
+    <li><span class="highlight">GridManager</span> — manages the tile grid, provides <code>WorldToTile()</code>, <code>IsInBounds()</code>, <code>IsBorderTile()</code></li>
+    <li><span class="highlight">TileManager</span> — per-tile queries: <code>IsWall()</code>, <code>DamageWall()</code>, wall health tracking (full → damaged → destroyed)</li>
+    <li>Walls have 2 visual states: <code>wall_full.png</code> and <code>wall_damaged.png</code></li>
+    <li>Bullets deal 1 damage per hit; walls have configurable HP pool</li>
+    <li>Border tiles act as soft map boundaries — bullets bounce / despawn</li>
+  </ul>
+</div>
+
+<!-- SLIDE 7: UI System -->
+<div class="slide">
+  <h2>UI System</h2>
+  <div class="two-col">
+    <div>
+      <p class="highlight" style="margin-bottom:6px;">Screens</p>
+      <ul>
+        <li><code>MainMenu.cs</code> — mode selection (Singleplayer → Classic / Multiplayer)</li>
+        <li><code>HUD.cs</code> — in-game HUD (health, score, ammo)</li>
+        <li><code>PauseMenu.cs</code> — pause overlay</li>
+        <li><code>GameOverScreen.cs</code> — win/lose state</li>
+      </ul>
+    </div>
+    <div>
+      <p class="highlight" style="margin-bottom:6px;">Health Bars</p>
+      <ul>
+        <li><code>HealthBar.cs</code> — generic smooth-fill bar</li>
+        <li><code>PlayerHealthBar.cs</code> — player-specific HUD element</li>
+        <li><code>EnemyHealthBar.cs</code> — world-space enemy bar</li>
+        <li>Adaptive AI health bar feature (GAME-13)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: Web Deployment -->
+<div class="slide">
+  <h2>Web Deployment (GitHub Pages)</h2>
+  <ul>
+    <li>Custom <span class="highlight">BuildWebGL.cs</span> editor script — builds scenes: Boot, MainMenu, Gameplay</li>
+    <li>Output: <code>Builds/WebGL/</code> with <code>.wasm.unityweb</code>, <code>.data.unityweb</code>, <code>.framework.js.unityweb</code></li>
+    <li>Custom <span class="highlight">index.html</span> with:</li>
+    <ul>
+      <li>Dark gradient background placeholder</li>
+      <li>"Play Game" button → creates Unity instance</li>
+      <li>Loading bar with progress callback</li>
+      <li>Trailer video placeholder (16:9 box)</li>
+    </ul>
+    <li>Hosted on <span class="highlight">GitHub Pages</span> (branch <code>MariusDev</code>)</li>
+    <li>Live URL: <code>crs011.github.io/proiectul-Unity-2D</code></li>
+  </ul>
+</div>
+
+<!-- SLIDE 9: Team Workflow -->
+<div class="slide">
+  <h2>Team Workflow</h2>
+  <ul>
+    <li><span class="highlight">Git Flow</span> — <code>main</code> (stable), <code>develop</code> (integration), feature branches</li>
+    <li>Feature branches named by task: <code>feature/GAME-4-tank-movement</code>, <code>feature/GAME-5-enemy-ai</code>, <code>feature/GAME-13-health-bars</code></li>
+    <li>Pull requests for code review & integration</li>
+    <li>Parallel branches for independent workstreams (<code>MariusDev</code>, <code>STHX100_Sprites_Change</code>, <code>devidevs/materiale</code>)</li>
+    <li>Standardized <code>.gitignore</code> — Library/, Temp/, Obj/, Build/, .env protection</li>
+    <li>Branch-specific build artifacts in <code>Build/</code> (WebGL output, Git-tracked for deployment)</li>
+  </ul>
+</div>
+
+<!-- SLIDE 10: Tech Stack Summary -->
+<div class="slide">
+  <h2>Tech Stack Summary</h2>
+  <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:16px;">
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">Unity 6000.5.1f1</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">C#</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">Unity WebGL</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">GitHub Pages</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">Physics2D</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">Input System</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">Object Pooling</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">ScriptableObjects</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">HTML/CSS/JS</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">Git / Git Flow</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">2D Tilemap</span>
+    <span class="tag" style="font-size:1rem; padding:8px 16px;">Pooling</span>
+  </div>
+</div>
+
+<!-- SLIDE 11: Thank you -->
+<div class="slide hero">
+  <div class="center">
+    <h1 style="font-size:3.5rem;">Thank You</h1>
+    <p style="font-size:1.2rem; color:#94a3b8; margin-top:12px;">Questions & Discussion</p>
+    <p style="margin-top:8px; color:#64748b;">GitHub: <a href="https://github.com/Borisdafish" style="color:#60a5fa">Borisdafish</a></p>
+  </div>
+</div>
+
+<div class="counter"><span id="cur">1</span> / <span id="total">12</span></div>
+<div class="slide-num">BetterTanks — Project Presentation</div>
+<div class="nav">
+  <button onclick="changeSlide(-1)">← Prev</button>
+  <button onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const curEl = document.getElementById('cur');
+const totalEl = document.getElementById('total');
+totalEl.textContent = slides.length;
+let idx = 0;
+function show(i) {
+  slides.forEach(s => s.classList.remove('active'));
+  idx = (i + slides.length) % slides.length;
+  slides[idx].classList.add('active');
+  curEl.textContent = idx + 1;
+}
+function changeSlide(d) { show(idx + d); }
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+  if (e.key === 'ArrowLeft') changeSlide(-1);
+});
+</script>
+</body>
+</html>
